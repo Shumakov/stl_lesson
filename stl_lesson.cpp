@@ -377,7 +377,7 @@ void printL(const list<int> li) {
 
 bool pr(int a, int b) {
 
-    return (a > b);
+    return (a < b);
 }
 
 bool pr_del(int a) {
@@ -386,42 +386,51 @@ bool pr_del(int a) {
 }
 
 
-int main() {
+int main999() {
     setlocale(LC_ALL, "rus");
 
-    list<int> li = { 1,2,3,4,5,7,6,8,9 };
-    printL(li);
-    li.push_back(9999);
-    li.push_front(-34);
-    printL(li);
+    //list<int> li = { 1,2,3,4,5,7,6,8,9 };
+    //printL(li);
+    //li.push_back(9999);
+    //li.push_front(-34);
+    //printL(li);
 
-    li.pop_back();
-    li.pop_front();
-    printL(li);
+    //li.pop_back();
+    //li.pop_front();
+    //printL(li);
 
-    //*(li.cbegin()) = 10000;
+    ////*(li.cbegin()) = 10000;
 
-    //li.
-    printL(li);
-    
+    ////li.
+    //printL(li);
+    //
 
-    return 0;
+    //system("pause");
 
+    //return 0;
+    /*list<int> li = { 1,283,3,4,5,7,6,8,9,6,100,65 };
     li.sort();
     printL(li);
-
+    
     li.sort(pr);
     printL(li);
 
+    return 0;*/
+
     list<int> li2 = { 1,2,3,4,9,9,9,9,5,7,6,8,9 };
+
+    //li2.
     printL(li2);
 
-    li2.unique();
+    /*li2.unique();
     printL(li2);
 
+    return 0;*/
 
     li2.remove_if(pr_del);
     printL(li2);
+
+    return 0;
 
     li2.assign(10, 34);
     printL(li2);
@@ -479,6 +488,244 @@ int main7() {
     return 0;
 }
 
+
+#include <array>
+// array - массив обертка для статического массива
+// 
+void printAr(const array<int, 30> li) {
+    for (auto l : li)
+        cout << l << " ";
+    cout << endl;
+}
+
+int main8() {
+    setlocale(LC_ALL, "rus");
+    const int size = 30;
+    array<int, size> arr = { 1,2,3,4,5,6,7,8,9 };
+    printAr(arr);
+
+    arr.front();
+    arr.back();
+
+    arr[1] = 1234;
+
+    arr.at(1) = 354555;
+
+    arr.fill(77);
+    printAr(arr);
+    return 0;
+}
+
+
+#include <set>
+// set - ассоциотивный, упорядоченный контейнет, на основе бинарного дерева
+// не поддерживает два одинаковых элемента
+// не поддерживает прямое изменение элементов (только через удаление)
+// 
+// 
+// multuset - 
+void printSe(const set<int> li) {
+    for (auto l : li)
+        cout << l << " ";
+    cout << endl;
+}
+
+
+
+int main5678() {
+    setlocale(LC_ALL, "rus");
+
+    set<int> se;
+
+    pair<int, string> pa = make_pair(1, "Test");
+
+    //cout << pa.first << endl;
+    //cout << pa.second << endl;
+
+   //cout << pa. [] << endl;
+    //return 0;
+
+    se.insert(7);
+    se.insert(1);
+    se.insert(5);
+    se.insert(6);
+    se.insert(11);
+    printSe(se);
+
+    se.erase(1);
+    se.insert(20);
+    printSe(se);
+
+    auto rez = se.insert(5);
+
+    //cout << *(rez.first) << endl;
+    //cout << rez.second << endl;
+
+    auto fin = se.find(7777);
+    if (fin != se.end())
+        cout << *fin << endl;
+    else
+        cout << "Not found!" << endl;
+
+
+    return 0;
+
+    se.insert(4);
+    se.insert(-1);
+    printSe(se);
+
+    se.insert(4);
+    se.insert(4);
+    se.insert(4);
+
+    // поиск
+    set<int>::iterator it = se.find(1);
+
+    if (it != se.end())
+        cout << *it << endl;
+
+    cout << "up (больше) " << *(se.upper_bound(1)) << endl;
+
+
+   
+    return 0;
+}
+
+void printMSe(const multiset<int> li) {
+    for (auto l : li)
+        cout << l << " ";
+    cout << endl;
+}
+
+int main99900() {
+    setlocale(LC_ALL, "rus");
+
+        
+    multiset<int> mse = { 1,2,9,0,7,5,4,4,6,99,4,4,5,77 };
+
+    printMSe(mse);
+
+    auto f = mse.find(4);
+
+    //cout << *f << endl;
+    //cout << *(--f) << endl;
+    //cout << *(++f) << endl;
+
+    //return 0;
+
+    auto ub = mse.upper_bound(99);
+    auto lb = mse.lower_bound(99);
+
+    if (ub != mse.end())
+        cout << "up (больше) " << *ub << endl;
+    else
+        cout << "upper_bound error " << endl;
+    if (lb != mse.end())
+        cout << "lower (больше или равно) " << *lb << endl;
+    else
+        cout << "lower_bound error " << endl;
+
+    return 0;
+
+    auto itt = mse.equal_range(4);
+    cout << *(itt.first) << endl;
+    cout << *(itt.second) << endl;
+
+    printMSe(mse);
+    return 0;
+}
+
+//Функтор 
+class Counter {
+    int cnt;
+public:
+    Counter(int start = 0 ) : cnt{ start } {};
+
+    //Counter() : Counter(0) {};
+
+    int operator() (bool direct = true) {
+        if (direct)
+            return cnt++;
+        return cnt--;
+    }
+
+    void resetTo(int start =0 ) { cnt = start; }
+};
+
+void useCntr() {
+
+    const int maxCnt{ 5 };
+    Counter cnt1{};
+    Counter cnt2{ 100 };
+    for (int i{ 0 }; i < maxCnt; ++i)
+    {
+        std::cout << "cnt1: " << cnt1(0) << '\n';
+        std::cout << "cnt2: " << cnt2() << '\n';
+    }
+
+    return;
+
+    std::cout << '\n';
+    cnt1.resetTo(10);
+    cnt2.resetTo(200);
+    for (int i{ 0 }; i < maxCnt; ++i)
+    {
+        std::cout << "cnt1: " << cnt1(0) << '\n';
+        std::cout << "cnt2: " << cnt2(0) << '\n';
+    }
+    std::cout << '\n';
+}
+
+
+int main() {
+
+    useCntr();
+
+    return 0;
+}
+
+
+
+// forward_list - односвязный список список
+// для операций в начале списка.
+//void printLF(const forward_list<int> li) {
+//    for (auto l : li)
+//        cout << l << " ";
+//    cout << endl;
+//}
+//
+//bool prLF(int a, int b) {
+//    return (a > b);
+//}
+//
+//bool pr_delLF(int a) {
+//    return (a > 5);
+//}
+
+int main711() {
+    setlocale(LC_ALL, "rus");
+
+    forward_list<int> li = { 1,2,3,4,5,7,6,8,9 };
+    //printLF(li);
+
+    //auto it = li.before_begin();
+
+   /* it++;
+    ++it;
+    it--;
+    --it;*/
+    //только
+    li.push_front(56);
+
+    li.insert_after(li.before_begin(), 77);
+    //printLF(li);
+
+    forward_list<int>::iterator it = li.begin();
+    it++;
+    //it--;
+
+    return 0;
+}
 
 
 
