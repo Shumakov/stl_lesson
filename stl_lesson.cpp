@@ -954,13 +954,11 @@ int main() {
     //Test t = get_test();
 
     Test t;
-    Test &t1 = t;
+    Test t1 = std::move(t);
 
-    //test t3;
+    
 
-    //t3 = std::move(t);
-
-    //t.print();
+    t.print();
 
     //t1 = t2;
 
