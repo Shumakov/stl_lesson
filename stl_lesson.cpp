@@ -3,6 +3,7 @@
 #include <ctime>
 #include <vector>
 #include <list>
+#include <map>
 #include <forward_list>
 using namespace std;
 
@@ -677,7 +678,7 @@ void useCntr() {
 }
 
 
-int main() {
+int main334455() {
 
     useCntr();
 
@@ -729,4 +730,239 @@ int main711() {
 
 
 
+// map
+// multimap
+void printMp(const map<string, int>& li) {
+    for (auto l : li)
+        cout << l.first << " " << l.second << " " << endl;
+    cout << endl;
+}
 
+void printMMp(const multimap<string, int>& li) {
+    for (auto l : li)
+        cout << l.first << " " << l.second << " " << endl;
+    cout << endl;
+}
+
+class Point {
+
+    int x;
+    int y;
+
+public:
+    Point(int x, int y) :x{ x }, y{ y } {}
+
+    double lenght() {
+        return sqrt(x * x + y * y);
+    }
+
+    friend  ostream& operator<< (ostream& o, const Point& p) {
+        o << "( " << p.x << " , " << p.y << ")";
+        return o;
+    }
+};
+
+int main_map() {
+    setlocale(LC_ALL, "rus");
+
+    map<double, Point> points;
+
+    Point p1(3, 4);//5
+    Point p2(12, 5);//13
+    Point p3(112, 445);// ?
+
+    points.emplace(p1.lenght(), p1);
+    points.emplace(p2.lenght(), p2);
+    points.emplace(p3.lenght(), p3);
+
+    for (auto p : points)
+        cout << "R = " << p.first << "  " << p.second << endl;
+
+    return 0;
+    
+
+    /*pair<int, string> pa (1, "Key1");
+    cout << pa.first << " " << pa.second << endl;
+
+    pair<string, double> pa1("Key1", 56.78);
+    cout << pa1.first << " " << pa1.second << endl;
+
+    return 0;*/
+
+
+    multimap<string, int>multi_map = { {"str1",12},{"str2",33} };
+
+
+    //
+    multi_map.emplace("a1", 1);
+    multi_map.emplace("a1", 2);
+    multi_map.emplace("a1", 3);
+    multi_map.emplace("a1", 4);
+    multi_map.emplace("a1", 5);
+
+    printMMp(multi_map);
+
+    return 0;
+
+    //mp.insert(pair<string,int> ("a",99));
+    map<string, int>mp = { {"str1",12},{"str2",33} };
+    mp.insert(make_pair("a2", 99));
+    mp.emplace("a1", 789);
+
+    map<string, int>::iterator it = mp.begin();
+    auto itt = mp.end();
+    //cout << (*it).first << " " << (*it).second << endl;
+    printMp(mp);
+
+
+    it = mp.find("str4");
+
+    return 0;
+
+    printMp(mp);
+    mp.insert({ "str3", 99 });
+    mp.insert(pair<string, int>("str4", 199));
+    mp.insert(make_pair("str5", 700));
+    mp.emplace("str6", 1000);
+
+    printMp(mp);
+
+    mp.insert_or_assign("str3", 100);
+
+    printMp(mp);
+
+    it = mp.find("str4");
+    if (it != mp.end())
+        cout << (*it).first << " " << (*it).second << endl;
+
+
+    cout << mp["str4"] << endl;
+    cout << mp["str777"] << endl;
+
+
+    mp["str4"] = 98766;
+    cout << mp["str4"] << endl;
+
+    mp["str777"] = 99999999;
+    cout << mp["str777"] << endl;
+
+
+    // at - проговорить
+
+    return 0;
+}
+
+
+
+class Test {
+
+    int size{};
+    int* data{};
+
+public:
+    Test(int size = 10) :size{ size } {
+        cout << "Test ()" << endl;
+        if (size)
+            data = new int[size] {};
+    }
+    ~Test() {
+        cout << "~Test ()" << endl;
+        delete[] data;
+    }
+    
+    Test(const Test& t) :size{t.size} {
+        cout << "Test (const Test&)" << endl;
+        if (t.data) {
+            data = new int[size];
+
+            for (int i{}; i < size; ++i)
+                data[i] = t.data[i];
+
+        }
+    }
+    
+    Test(Test&& t) noexcept {
+        cout << "Test ( Test&&  )" << endl;
+        size = t.size;
+        data = t.data;
+        t.data = nullptr;
+        t.size = 0;
+    }
+
+    void print() {
+
+        for (int i{}; i < size; ++i)
+            cout << data[i] << "  ";
+        cout << endl;
+
+
+    }
+
+    Test& operator= (const Test& t) {
+
+        if (this == &t)
+            return *this;
+
+        delete[] data;
+        data = nullptr;
+
+        size = t.size;
+
+        if (t.data) {
+            data = new int[size];
+
+            for (int i{}; i < size; ++i)
+                data[i] = t.data[i];
+
+        }
+
+        return *this;
+
+    }
+
+};
+
+Test get_test() {
+
+    Test t;
+
+    t.print();
+
+    return t;
+}
+
+int main() {
+    setlocale(LC_ALL, "rus");
+
+
+   /* int a = 123;
+    int& l = a;
+
+    int* p{};
+
+    int&& l1 = (10+45);
+
+
+
+
+    cout << a << "  " << l <<"  " << l1 << endl;
+
+    return 0;*/
+
+    //Test t1;
+    //Test t2;
+    //Test t = get_test();
+
+    Test t;
+    Test &t1 = t;
+
+    //test t3;
+
+    //t3 = std::move(t);
+
+    //t.print();
+
+    //t1 = t2;
+
+    return 0;
+}
